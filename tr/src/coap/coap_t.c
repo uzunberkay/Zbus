@@ -25,6 +25,10 @@ void coap_send_data_request(const char *sensor_name, char *sensor_value,char* ur
     otMessage *myMessage;
     otMessageInfo myMessageInfo;
     otInstance *myInstance = openthread_get_default_instance();  // OpenThread instansını al
+	
+	const otMeshLocalPrefix *ml_prefix = otThreadGetMeshLocalPrefix(myInstance);             
+    uint8_t serverInterFaceID[8] = { 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x01};   
+
     char payload[BUFFERSIZE];  // JSON verisini tutacak tampon
     snprintf(payload, sizeof(payload), "{\"%s\": %s}", sensor_name, sensor_value);  // JSON formatında veriyi oluştur
 
@@ -53,13 +57,14 @@ void coap_send_data_request(const char *sensor_name, char *sensor_value,char* ur
         // Mesaj bilgilerini ayarla
         memset(&myMessageInfo , 0 , sizeof(myMessageInfo));
 
-        // Hedef IP adresini manuel olarak ayarlıyoruz
-        const char *destination_ip = "fdde:ad00:beef:cafe:c10b:359d:6d4a:c32d";  // Hedef IP adresi
-        error = otIp6AddressFromString(destination_ip, &myMessageInfo.mPeerAddr);  // IP adresini yapılandırmaya çevir
         if (error != OT_ERROR_NONE) { 
             printk("Failed to set IP address: %d\n", error);
             break; 
         }
+		
+        memset(&myMessageInfo , 0 , sizeof(myMessageInfo));
+        memcpy(&myMessageInfo.mPeerAddr.mFields.m8[0] , ml_prefix , 8);
+        memcpy(&myMessageInfo.mPeerAddr.mFields.m8[8] , serverInterFaceID,8);		
 
         myMessageInfo.mPeerPort = OT_DEFAULT_COAP_PORT;  // CoAP portunu ayarla
 
