@@ -18,10 +18,10 @@ Bu projede **nRF Connect SDK v2.3.0** kullanılmıştır. Kart seçimi olarak **
 
 ```plaintext
 ├── src/
-│   ├── adc_t/         # ADC sensör okuma kodları
-│   ├── coap/          # CoAP protokolüyle veri gönderimi
-│   ├── tim/           # Zaman tetikleyici ve zaman hesaplama
-│   └── workqueue/     # İş kuyrukları ile işleme yapma
-├── prj.conf           # Zephyr RTOS proje ayarları
-├── nrf52840dk_nrf52840.overlay  # Donanım ayarları (devicetree overlay)
-└── CMakeLists.txt     # Proje yapılandırma dosyası
+│   ├── adc_t/                                  # ADC sensör okuma kodları
+│   ├── coap/                                   # CoAP protokolüyle veri gönderimi
+│   ├── tim/                                    # Zaman tetikleyici ve zaman hesaplama
+│   └── workqueue/                              # İş kuyrukları ile işleme yapma
+├── prj.conf                                    # Zephyr RTOS proje ayarları
+├── nrf52840dk_nrf52840.overlay                 # Donanım ayarları (devicetree overlay)
+└── CMakeLists.txt                              # Proje yapılandırma dosyası
